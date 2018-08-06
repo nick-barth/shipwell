@@ -1,20 +1,22 @@
 import { combineReducers } from 'redux';
 import { ActionType } from 'typesafe-actions';
 
-import * as actions from '../actions/tournament';
+import * as tournamentActions from './actions';
 
-export type CountersAction = ActionType<typeof actions>;
+export type TournamentAction = ActionType<typeof tournamentActions>;
 
-export type CountersState = {
+export type TournamentState = {
   readonly reduxCounter: number;
 };
 
-export default combineReducers<CountersState, CountersAction>({
-  reduxCounter: (state = 0, action) => {
+
+
+export default combineReducers<TournamentState, TournamentAction>({
+  reduxCounter: (state = 0, action:any) => {
     switch (action.type) {
-      case 'ADD_ONE':
+      case 'INCREMENT':
         return state + 1; // action: { type: "INCREMENT"; }
-      case 'USE_OF_PAYLOAD':
+      case 'ADD':
         return state + action.payload; // action: { type: "ADD"; payload: number; }
       default:
         return state;

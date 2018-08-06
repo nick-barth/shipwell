@@ -1,9 +1,14 @@
 // Vendors
 import * as React from 'react';
 
-export default class Create extends React.Component {
+import { connect } from 'react-redux';
+
+
+class Create extends React.Component {
 
 	public render () {
+
+		console.log(this.props);
 
 		return (
 			<div>
@@ -12,4 +17,10 @@ export default class Create extends React.Component {
 		);
 	}
 }
+
+const mapStateToProps = (state: any) => ({
+  state
+});
+
+export default connect(mapStateToProps, {})(Create);
 

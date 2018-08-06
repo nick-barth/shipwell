@@ -8,6 +8,7 @@ export type TournamentAction = ActionType<typeof tournamentActions>;
 export type TournamentState = {
   readonly tournaments: {
 	  id: number,
+	  name: string,
 	  size: number,
 	  teams: object[]
   };
@@ -19,9 +20,9 @@ export default combineReducers<TournamentState, TournamentAction>({
   tournaments: (state:any = [], action:any) => {
     switch (action.type) {
       case 'ADD_TOURNAMENT':
-	  	console.log(action);
 	  	const newTournament = {
-			  id: 3,
+			  id: state.length + 1,
+			  name: action.payload.name,
 			  size: action.payload.size,
 			  teams: []
 		};

@@ -3,8 +3,15 @@ import * as React from 'react';
 
 import { connect } from 'react-redux';
 
+import * as tournamentActions from '../../store/tournament/actions';
 
-class Create extends React.Component {
+
+class Create extends React.Component<any, any> {
+
+	constructor(props:any) {
+		super(props);
+
+	}
 
 	public render () {
 
@@ -19,8 +26,10 @@ class Create extends React.Component {
 }
 
 const mapStateToProps = (state: any) => ({
-  state
+  tournaments: state.tournament.tournaments
 });
 
-export default connect(mapStateToProps, {})(Create);
+export default connect(mapStateToProps, {
+  addTournament: tournamentActions.addTournament,
+})(Create);
 

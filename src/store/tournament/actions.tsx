@@ -1,8 +1,6 @@
 import { createStandardAction } from 'typesafe-actions';
 
-const ADD = "ADD_ONE";
-const INCREMENT = "INCREMENT";
+const ADD = "ADD_TOURNAMENT";
 
 
-export const increment = createStandardAction(INCREMENT)<void>();
-export const add = createStandardAction(ADD)<number>();
+export const addTournament = createStandardAction(ADD)<object>();

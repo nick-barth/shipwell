@@ -6,18 +6,26 @@ import * as tournamentActions from './actions';
 export type TournamentAction = ActionType<typeof tournamentActions>;
 
 export type TournamentState = {
-  readonly reduxCounter: number;
+  readonly tournaments: {
+	  id: number,
+	  size: number,
+	  teams: object[]
+  };
 };
 
 
 
 export default combineReducers<TournamentState, TournamentAction>({
-  reduxCounter: (state = 0, action:any) => {
+  tournaments: (state:any = [], action:any) => {
     switch (action.type) {
-      case 'INCREMENT':
-        return state + 1; // action: { type: "INCREMENT"; }
-      case 'ADD':
-        return state + action.payload; // action: { type: "ADD"; payload: number; }
+      case 'ADD_TOURNAMENT':
+	  	console.log(action);
+	  	const newTournament = {
+			  id: 3,
+			  size: action.payload.size,
+			  teams: []
+		};
+        return state.concat([], newTournament)
       default:
         return state;
     }

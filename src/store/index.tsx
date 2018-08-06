@@ -2,10 +2,6 @@ import { createStore } from 'redux';
 
 import rootReducer from './root-reducer';
 
-const shadowName = {
-	Wow:'this is it'
-};
-
 
 function configureStore(initialState?: object) {
   // create store
@@ -13,7 +9,7 @@ function configureStore(initialState?: object) {
 }
 
 // pass an optional param to rehydrate state on app start
-const store = configureStore(shadowName);
+const store = configureStore();
 
 // export store singleton instance
 export default store;

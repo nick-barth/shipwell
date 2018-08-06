@@ -12,7 +12,7 @@ export const App: React.StatelessComponent<{}> = () => {
   return (
 		<BrowserRouter>
 			<React.Fragment>
-				This is the header
+				Challenger Mode
 				<Switch>
 					<Route exact={true} path="/" component={Dashboard} />
 					<Route exact={true} path="/tournament" component={Tournament} />

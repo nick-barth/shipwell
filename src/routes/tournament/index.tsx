@@ -26,6 +26,7 @@ class Tournament extends React.Component<any, any> {
 				{tourny ? (
 					<React.Fragment>
 						<div className="tournament__title">
+							Title:
 							{tourny.name}
 						</div>
 						<div className="tourny__teams">

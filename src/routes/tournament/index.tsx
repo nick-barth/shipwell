@@ -2,6 +2,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+// Component
+import Input from '../../components/input';
+
 // Actions
 import * as tournamentActions from '../../store/tournament/actions';
 
@@ -16,9 +19,13 @@ class Tournament extends React.Component<any, any> {
 		});
 
 	}
+
+	public onAddTeam(team:string):void {
+		tournamentActions.addTournament(team);
+	}
+
 	public render () {
 		const { id } = this.props.match.params;
-
 		const tourny = this.props.tournaments.find((t:any) => t.id === parseInt(id, 10));
 
 		return (
@@ -26,7 +33,6 @@ class Tournament extends React.Component<any, any> {
 				{tourny ? (
 					<React.Fragment>
 						<div className="tournament__title">
-							Title:
 							{tourny.name}
 						</div>
 						<div className="tourny__teams">
@@ -40,6 +46,7 @@ class Tournament extends React.Component<any, any> {
 						</div>
 						<div className="Add Team">
 							Add Team
+							<Input handleSubmit={(newTeam) => this.onAddTeam(newTeam)} />
 						</div>
 					</React.Fragment>
 				) : 'Tourny does not exist'}

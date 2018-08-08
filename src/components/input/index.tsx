@@ -29,6 +29,9 @@ export default class Input extends React.Component<IProps, IState> {
 	public onSubmit(e:any) {
 		e.preventDefault();
 		this.props.handleSubmit(this.state.inputString);
+		this.setState({
+			inputString: ''
+		});
 	}
 
 	public render () {

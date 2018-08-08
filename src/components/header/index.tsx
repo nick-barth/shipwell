@@ -5,7 +5,7 @@ import './style.css';
 const Header: React.SFC<{}> = (props) => {
 	return (
 		<div className="header">
-			<img className="header__image" alt="title" src="https://www.challengermode.com/Content/img/cm/logo.svg" />
+			Header Goes here! Wow!
 		</div>
 	);
 }

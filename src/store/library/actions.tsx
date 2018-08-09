@@ -1,5 +1,5 @@
 import { action } from 'typesafe-actions';
 
-const ADD_TEAM = "ADD_TEAM";
+const ADD_TO_LIBRARY = "ADD_TO_LIBRARY";
 
-export const addToLibrary = (song: string) => action(ADD_TEAM, song);
+export const addToLibrary = (album: string) => action(ADD_TO_LIBRARY, album);

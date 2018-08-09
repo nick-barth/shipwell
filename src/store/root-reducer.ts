@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { tournamentReducer } from './tournament';
+import { libraryReducer } from './library';
 
 const rootReducer = combineReducers({
-  tournament: tournamentReducer,
+  library: libraryReducer,
 });
 
 export default rootReducer;

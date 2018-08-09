@@ -1,8 +1,36 @@
 .header {
-	padding:2rem;
-	padding-left: 2rem;
+	display:flex;
+	padding: 1.5rem;
+	background: #F0FFFF;
+	color: #333;
+	position:relative;
 }
 
-.header__image {
-	height:4.5rem;
+.header__title {
+	align-self: center;
+	font-size:2rem;
+}
+
+.header__search {
+	cursor:pointer;
+	align-self: center;
+	text-align:right;
+	flex-grow: 1;
+}
+
+.header__search-button {
+	float:right;
+}
+
+.header__search-button:after {
+  content: '';
+  width: 0px;
+  height: 1px;
+  display: block;
+  background: #333;
+  transition: .3s ease-in-out all;
+}
+
+.header__search-button--active:after {
+  width: 100%;
 }

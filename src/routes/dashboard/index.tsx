@@ -3,32 +3,26 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 // Actions
-import * as tournamentActions from '../../store/tournament/actions';
+import * as libraryActions from '../../store/library/actions';
 
 class Dashboard extends React.Component<any, any> {
 
 	constructor(props:any) {
 		super(props);
 
-		props.addTournament({
-			name: 'Wu-Tang Challenge',
-			size: 32
-		});
-
 	}
+
 	public render () {
 		return (
-			<div>
-				Dash
-			</div>
+			<div />
 		);
 	}
 }
 
 const mapStateToProps = (state: any) => ({
-  tournaments: state.tournament.tournaments
+  librarys: state.library.librarys
 });
 
 export default connect(mapStateToProps, {
-  addTournament: tournamentActions.addTournament,
+  addTolibrary: libraryActions.addToLibrary,
 })(Dashboard);

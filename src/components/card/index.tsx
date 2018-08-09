@@ -13,13 +13,14 @@ import './style.css';
 
 type Props = {
 	data: ILibrary,
-	library: ILibrary[],
+	library?: ILibrary[],
 	addToLibrary(object:any): void
 };
 
 const Card = (props:Props) => {
 	const { data, addToLibrary, library } = props;
-	const isAddDisabled = !library.find((i:any) => i.id === data.id);
+	const isAddDisabled = library && !library.find((i:any) => i.id === data.id);
+	const dateString = new Date(data.releaseDate).toLocaleDateString();
 
 	return (
 		<div className="card">
@@ -32,7 +33,7 @@ const Card = (props:Props) => {
 					Album: {data.collectionName}
 				</div>
 				<div className="card__title">
-					Released: {data.releaseDate}
+					Released: {dateString}
 				</div>
 			</div>
 			<div className="card__add">

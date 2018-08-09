@@ -19,9 +19,9 @@ export default combineReducers<LibraryState, LibraryAction>({
 	library: (state:any = [], action:any) => {
 		switch (action.type) {
 			case 'ADD_TO_LIBRARY':
-				const newState = state.concat([], {
+				const newState = [{
 					...action.payload
-				});
+				}].concat([], state);
 				return newState;
 			default:
 				return state;

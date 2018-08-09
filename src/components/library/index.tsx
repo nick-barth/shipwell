@@ -37,12 +37,17 @@ export default class Library extends React.Component<IProps, IState> {
 				</div>
 				<div className="library__library">
 					{library.length > 0 ? (
-						library.slice(0, pagination).map((item:ILibrary) => <Card key={item.photo} data={item} />)
+						library.slice(0, pagination).map((item:ILibrary) =>
+						<div key={item.photo} className="library__card">
+							<Card data={item} />
+						</div>)
 					) : 'Empty Library!'}
 				</div>
-				<div className="library__loadmore" onClick={() => this.setState({pagination: pagination + 3})}>
-					Load More
-				</div>
+				{library.length > pagination ? (
+					<div className="library__loadmore" onClick={() => this.setState({pagination: pagination + 3})}>
+						Load More
+					</div>
+				): null}
             </div>
 		);
 	}

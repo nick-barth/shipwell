@@ -37,6 +37,7 @@ export default class Nav extends React.Component<{}, IState> {
 	public searchMusic (searchString:string) {
 		if (searchString === '') {
 			this.setState({ isSearching:false, results:[], noResults: false})
+			return;
 		}
 		const formattedString = searchString.replace(/ /g, '+');
 		const url = 'https://itunes.apple.com/search?entity=musicArtist&entity=album&';
@@ -49,7 +50,6 @@ export default class Nav extends React.Component<{}, IState> {
 				return;
 			}
 			const formattedData = data.results.map((item:any) => {
-				console.log(item);
 				const { collectionName, artistName, releaseDate, collectionId } = item;
 				return {
 					collectionName,

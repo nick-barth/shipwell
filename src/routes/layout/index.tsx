@@ -2,9 +2,6 @@
 import * as React from 'react';
 import { Route } from "react-router-dom";
 
-// Components
-import Header from '../../components/header';
-
 // CSS
 import './style.css';
 
@@ -19,10 +16,7 @@ const Layout: React.SFC<ILayoutProps> = (props) => {
 
 	return (
 		<React.Fragment>
-			<div className="layout">
-				<Header />
-				<Route exact={exact} path={path} component={component} />
-			</div>
+			<Route exact={exact} path={path} component={component} />
 		</React.Fragment>
 	)
 }

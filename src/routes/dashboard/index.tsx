@@ -2,8 +2,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-// Actions
-import * as libraryActions from '../../store/library/actions';
+// Components
+import Nav from '../../components/nav';
+import Library from '../../components/library';
 
 class Dashboard extends React.Component<any, any> {
 
@@ -14,15 +15,16 @@ class Dashboard extends React.Component<any, any> {
 
 	public render () {
 		return (
-			<div />
+			<React.Fragment>
+				<Nav />
+				<Library library={this.props.library} />
+			</React.Fragment>
 		);
 	}
 }
 
 const mapStateToProps = (state: any) => ({
-  librarys: state.library.librarys
+  library: state.library.library
 });
 
-export default connect(mapStateToProps, {
-  addTolibrary: libraryActions.addToLibrary,
-})(Dashboard);
+export default connect(mapStateToProps, null)(Dashboard);

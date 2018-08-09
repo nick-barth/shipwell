@@ -5,16 +5,21 @@ import * as React from 'react';
 import Spinner from '../spinner';
 import Card from '../card';
 
+// Types
+import { ILibrary } from '../../types';
+
 // CSS
 import './style.css';
+
 
 type IState = {
 	isSearchActive: boolean,
 	isSearching: boolean,
-	results: any[]
+	results: any[],
+	noResults: boolean
 }
 
-export default class Header extends React.Component<{}, IState> {
+export default class Nav extends React.Component<{}, IState> {
 	private textInput: HTMLInputElement;
 	private h: any;
 
@@ -24,13 +29,14 @@ export default class Header extends React.Component<{}, IState> {
 		this.state = {
 			isSearchActive: false,
 			isSearching: false,
-			results: []
+			results: [],
+			noResults: false
 		};
 	}
 
 	public searchMusic (searchString:string) {
 		if (searchString === '') {
-			this.setState({ isSearching:false, results:[]})
+			this.setState({ isSearching:false, results:[], noResults: false})
 		}
 		const formattedString = searchString.replace(/ /g, '+');
 		const url = 'https://itunes.apple.com/search?entity=musicArtist&entity=album&';
@@ -38,13 +44,19 @@ export default class Header extends React.Component<{}, IState> {
 
 		fetch(url + params, { method: 'get'}).then(r => r.json())
 		.then(data => {
+			if (!data.results[0]) {
+				this.setState({noResults: true, results: [], isSearching:false});
+				return;
+			}
 			const formattedData = data.results.map((item:any) => {
-				const { collectionName, artistName, releaseDate } = item;
+				console.log(item);
+				const { collectionName, artistName, releaseDate, collectionId } = item;
 				return {
 					collectionName,
 					artistName,
 					releaseDate,
 					photo: item.artworkUrl100,
+					id: collectionId
 				}
 			});
 			this.setState({ results: formattedData, isSearching:false})
@@ -54,7 +66,7 @@ export default class Header extends React.Component<{}, IState> {
 	}
 
 	public debounce(func: () => void, wait = 50) {
-		this.setState({isSearching: true});
+		this.setState({isSearching: true, noResults: false});
 		return () => {
 			clearTimeout(this.h);
 			this.h = setTimeout(() => func(), wait);
@@ -62,29 +74,29 @@ export default class Header extends React.Component<{}, IState> {
 	}
 
 	public render () {
-		const { isSearchActive, isSearching, results } = this.state;
+		const { isSearchActive, isSearching, results, noResults } = this.state;
 
 		return (
-			<div className="header">
-				<div className="header__nav">
-					<div className="header__title">
+			<div className="nav">
+				<div className="nav__nav">
+					<div className="nav__title">
 						gormandizer
 					</div>
-					<div className={`header__search`}>
+					<div className={`nav__search`}>
 						<div
-							className={`header__search-button header__search-button--${isSearchActive ? 'active' : 'disabled'}`}
+							className={`nav__search-button nav__search-button--${isSearchActive ? 'active' : 'disabled'}`}
 							onClick={() => {
-								this.setState({ isSearchActive: !isSearchActive })
+								this.setState({isSearchActive: !isSearchActive, isSearching: false, results: []})
 								this.textInput.focus();
 							}}
 						>
 							search
 						</div>
 					</div>
-					<div className={`search search--${isSearchActive ? 'active' : 'disabled'}`}>
+					<div className={`nav__search-bar nav__search-bar--${isSearchActive ? 'active' : 'disabled'}`}>
 						<input
 							type="text"
-							className="search__input"
+							className="nav__search-bar__input"
 							onChange={(e) => {
 								const change = e.target.value;
 								const debounced = this.debounce(() => this.searchMusic(change), 1000);
@@ -95,18 +107,23 @@ export default class Header extends React.Component<{}, IState> {
 						/>
 					</div>
 				</div>
-				<div className="header__results">
+				<div className="nav__results">
 					{isSearching ? (
 						<Spinner />
 					) : (
-						results.map(result => {
+						results.map((result:ILibrary) => {
 							return (
-								<div key={result.artistName} className="header__result">
+								<div key={result.releaseDate + result.collectionName} className="nav__result">
 									<Card data={result} />
 								</div>
 							);
 						})
 					)}
+					{noResults && isSearchActive ? (
+						<div className="nav__noresults">
+							No results found... :(
+						</div>
+					): null}
 				</div>
 			</div>
 		);

@@ -22,7 +22,6 @@ export default combineReducers<LibraryState, LibraryAction>({
 				const newState = state.concat([], {
 					...action.payload
 				});
-				console.log(state);
 				return newState;
 			default:
 				return state;

@@ -1,7 +1,7 @@
 .nav__nav {
 	display:flex;
 	padding: 1.5rem;
-	background: #F0FFFF;
+	background: #fff;
 	color: #333;
 	position:relative;
 	margin-bottom:2rem;
@@ -65,7 +65,7 @@
 	outline: none;
 	padding: 0 .5rem;
 	caret-color:	#A9A9A9;
-	background-color:#F0FFFF;
+	background-color:#FFF;
  }
 
  .nav__noresults {

@@ -36,8 +36,8 @@ export default class Nav extends React.Component<{}, IState> {
 		};
 	}
 
-	public searchMusic (searchString:string) {
-		const formattedString = searchString.replace(/ /g, '+');
+	public searchMusic () {
+		const formattedString = this.state.searchString.replace(/ /g, '+');
 		const url = 'https://itunes.apple.com/search?entity=musicArtist&entity=album&';
 		const params = `term=${formattedString}&limit=3`;
 
@@ -104,7 +104,7 @@ export default class Nav extends React.Component<{}, IState> {
 								} else {
 									this.setState({searchString: e.target.value});
 								}
-								const debounced = this.debounce(() => this.searchMusic(searchString), 1000);
+								const debounced = this.debounce(() => this.searchMusic(), 1000);
 								debounced();
 
 							}}

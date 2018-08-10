@@ -37,9 +37,7 @@ const Card = (props:Props) => {
 				</div>
 			</div>
 			<div className="card__add">
-				{isAddDisabled ? (
-					<img className="card__add-icon" src="/icons/plus-button.svg" onClick={() => addToLibrary(data)} />
-				) : null}
+				<img className={`card__add-icon ${!isAddDisabled ? 'card__add-icon--clicked' : null}`} src="/icons/plus-button.svg" onClick={() => addToLibrary(data)} />
 			</div>
 		</div>
 	)

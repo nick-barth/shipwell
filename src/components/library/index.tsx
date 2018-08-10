@@ -4,6 +4,9 @@ import * as React from 'react';
 // Components
 import Card from '../card';
 
+// CSS
+import './style.css';
+
 // Types
 import { ILibrary } from '../../types';
 
@@ -31,7 +34,7 @@ export default class Library extends React.Component<IProps, IState> {
 		const { pagination } = this.state;
 
 		return (
-            <div>
+            <div className="library">
 				<div className="library__title">
 					Miles’s Melodious Music Miscellany
 				</div>

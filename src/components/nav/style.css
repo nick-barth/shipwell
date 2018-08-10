@@ -4,6 +4,12 @@
 	background: #F0FFFF;
 	color: #333;
 	position:relative;
+	margin-bottom:2rem;
+
+	transition: all .3s ease-in-out;
+}
+
+.nav__nav--active {
 	margin-bottom:5rem;
 }
 

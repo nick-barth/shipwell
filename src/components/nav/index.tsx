@@ -16,7 +16,8 @@ type IState = {
 	isSearchActive: boolean,
 	isSearching: boolean,
 	results: any[],
-	noResults: boolean
+	noResults: boolean,
+	searchString: string
 }
 
 export default class Nav extends React.Component<{}, IState> {
@@ -30,15 +31,12 @@ export default class Nav extends React.Component<{}, IState> {
 			isSearchActive: false,
 			isSearching: false,
 			results: [],
-			noResults: false
+			noResults: false,
+			searchString: ''
 		};
 	}
 
 	public searchMusic (searchString:string) {
-		if (searchString === '') {
-			this.setState({ isSearching:false, results:[], noResults: false})
-			return;
-		}
 		const formattedString = searchString.replace(/ /g, '+');
 		const url = 'https://itunes.apple.com/search?entity=musicArtist&entity=album&';
 		const params = `term=${formattedString}&limit=3`;
@@ -74,11 +72,11 @@ export default class Nav extends React.Component<{}, IState> {
 	}
 
 	public render () {
-		const { isSearchActive, isSearching, results, noResults } = this.state;
+		const { isSearchActive, isSearching, results, noResults, searchString } = this.state;
 
 		return (
 			<div className="nav">
-				<div className="nav__nav">
+				<div className={`nav__nav nav__nav--${isSearchActive ? 'active' : 'disabled'}`}>
 					<div className="nav__title">
 						gormandizer
 					</div>
@@ -86,7 +84,7 @@ export default class Nav extends React.Component<{}, IState> {
 						<div
 							className={`nav__search-button nav__search-button--${isSearchActive ? 'active' : 'disabled'}`}
 							onClick={() => {
-								this.setState({isSearchActive: !isSearchActive, isSearching: false, results: []})
+								this.setState({isSearchActive: !isSearchActive, isSearching: false, results: [], searchString: ''})
 								this.textInput.focus();
 							}}
 						>
@@ -97,9 +95,16 @@ export default class Nav extends React.Component<{}, IState> {
 						<input
 							type="text"
 							className="nav__search-bar__input"
+							value={searchString}
 							onChange={(e) => {
-								const change = e.target.value;
-								const debounced = this.debounce(() => this.searchMusic(change), 1000);
+								if (e.target.value === '') {
+									this.setState({ isSearching:false, results:[], noResults: false, searchString: ''});
+									clearTimeout(this.h);
+									return;
+								} else {
+									this.setState({searchString: e.target.value});
+								}
+								const debounced = this.debounce(() => this.searchMusic(searchString), 1000);
 								debounced();
 
 							}}

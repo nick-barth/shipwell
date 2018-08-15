@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 // Actions
-import { libraryActions } from '../../store/library/';
+import { userActions } from '../../store/user/';
 
 // Types
 import { ILibrary } from '../../types';
@@ -14,11 +14,11 @@ import './style.css';
 type Props = {
 	data: ILibrary,
 	library?: ILibrary[],
-	addToLibrary(object:any): void
+	addUserInfo(object:any): void
 };
 
 const Card = (props:Props) => {
-	const { data, addToLibrary, library } = props;
+	const { data, addUserInfo, library } = props;
 	const isAddDisabled = library && !library.find((i:any) => i.id === data.id);
 	const dateString = new Date(data.releaseDate).toLocaleDateString();
 
@@ -37,16 +37,16 @@ const Card = (props:Props) => {
 				</div>
 			</div>
 			<div className="card__add">
-				<img className={`card__add-icon ${!isAddDisabled ? 'card__add-icon--clicked' : null}`} src="/icons/plus-button.svg" onClick={() => addToLibrary(data)} />
+				<img className={`card__add-icon ${!isAddDisabled ? 'card__add-icon--clicked' : null}`} src="/icons/plus-button.svg" onClick={() => addUserInfo(data)} />
 			</div>
 		</div>
 	)
 }
 
 const mapStateToProps = (state: any) => ({
-  library: state.library.library
+  library: state.user.library
 });
 
 export default connect(mapStateToProps, {
-  addToLibrary: libraryActions.addToLibrary,
+  addUserInfo: userActions.addUserInfo,
 })(Card);

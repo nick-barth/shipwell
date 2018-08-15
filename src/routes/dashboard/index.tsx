@@ -17,14 +17,14 @@ class Dashboard extends React.Component<any, any> {
 		return (
 			<React.Fragment>
 				<Nav />
-				<Library library={this.props.library} />
+				<Library library={this.props.user} />
 			</React.Fragment>
 		);
 	}
 }
 
 const mapStateToProps = (state: any) => ({
-  library: state.library.library
+  user: state.user
 });
 
 export default connect(mapStateToProps, null)(Dashboard);

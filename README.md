@@ -7,6 +7,9 @@ I did not do a 2 page layout, although I left some skeleton code in there to sho
 
 Thanks for the challenge, I enjoyed it.
 
+
+EDIT: Did the bonus to put Shipwell on the map!
+
 To Run
 ```
 npm install

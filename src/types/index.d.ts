@@ -1,4 +1,4 @@
-export interface ILibrary {
+export interface IUser {
 	photo: string,
 	releaseDate: string,
 	artistName: string,

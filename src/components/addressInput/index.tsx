@@ -1,7 +1,16 @@
 // Vendors
 import * as React from 'react';
 
-export default class AddressInput extends React.Component<any, any> {
+import './style.css';
+
+import Spinner from '../spinner';
+
+interface IProps {
+	onValidate: (type: string, data:object) => void
+	type: string
+}
+
+export default class AddressInput extends React.Component<IProps, any> {
 	private h: any;
 
 	constructor(props:any) {
@@ -15,15 +24,17 @@ export default class AddressInput extends React.Component<any, any> {
 
 	}
 
-	public debounce(func: () => void, wait = 50) {
+	debounce(func: () => void, wait = 50) {
+		this.setState({isValidating: true});
 		return () => {
 			clearTimeout(this.h);
 			this.h = setTimeout(() => func(), wait);
 		}
 	}
 
-	public validateAddress() {
-		this.setState({isValidating: true});
+	validateAddress() {
+		const { type, onValidate } = this.props;
+
 		const body = {
 				formatted_address: this.state.address
 		};
@@ -38,30 +49,38 @@ export default class AddressInput extends React.Component<any, any> {
 		}).then((resp:any) => {
 			return resp.json()
 		}).then((data) => {
-			console.log(data);
-			data.error ? this.setState({isError: true}) : this.setState({isValid: true})
+			data.error ? this.setState({isError: true, isValidating: false}) : this.setState({isValid: true, isError:false, isValidating: false });
+			const formattedData = {
+				lat: data.geocoded_address.latitude,
+				lon: data.geocoded_address.longitude,
+				formatted_address: data.geocoded_address.formatted_address
+			}
+			onValidate(type, formattedData);
+			this.setState({address: formattedData.formatted_address});
 		}).catch((error) => {
-			this.setState({isError: true});
+			this.setState({isError: true, isValid: false});
 		})
 
 	}
 
-	public render () {
-		const { address, isError } = this.state;
+	render () {
+		const { address, isValid, isError, isValidating } = this.state;
 
 		return (
 			<div className="addressInput">
 				<input
 					type="text"
-					className="nav__search-bar__input"
+					className={`addressInput__input ${isValid ? 'addressInput__input--valid' : null} ${isError ? 'addressInput__input--error' : null}`}
 					value={address}
 					onChange={(e) => {
-						this.setState({address: e.target.value});
+						this.setState({address: e.target.value, isValid: false});
 						const debounced = this.debounce(() => this.validateAddress(), 1000);
 						debounced();
 					}}
 				/>
-				{isError ? <div> error u guy </div> : <div> no this is fine m8 </div>}
+				<div className="addressInput__spinner">
+					{isValidating? <Spinner /> : null}
+				</div>
 			</div>
 		);
 	}

@@ -6,7 +6,8 @@
 	"no-console": false,
 	"array-type": [true, "array-simple"],
 	"jsx-no-lambda": false,
-	"object-literal-sort-keys": false
+	"object-literal-sort-keys": false,
+	"member-access": [true, "no-public"]
   },
   "linterOptions": {
     "exclude": [

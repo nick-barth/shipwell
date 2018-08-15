@@ -15,12 +15,13 @@ class Dashboard extends React.Component<any, any> {
 		super(props);
 
 		this.state = {
-			route: null
+			origin: null,
+			destination: null
 		};
 
 	}
 
-	public componentDidMount () {
+	componentDidMount () {
 		fetch('https://dev-api.shipwell.com/v2/auth/me/', {
 			method: 'get',
 			headers: new Headers({
@@ -37,11 +38,18 @@ class Dashboard extends React.Component<any, any> {
 		});
 	}
 
-	public render () {
+	onValidatedAddress = (type:string, route:object) => {
+		this.setState({[type]: route})
+
+	}
+
+	render () {
+		const { origin, destination } = this.state;
 		return (
 			<React.Fragment>
-				<Route />
-				<Map />
+				<h1> Shipwell </h1>
+				<Route onValidate={this.onValidatedAddress} />
+				<Map origin={origin} destination={destination} />
 			</React.Fragment>
 		);
 	}

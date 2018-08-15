@@ -15,57 +15,45 @@ export default class MapRenderer extends React.Component<IProps, any> {
 		super(props);
 
 		this.state = {
-			center: {
-				lat: 42.9642169,
-				lan: -78.7725794
-			},
-			directions: 'null',
-			origin: {
-				lat: null,
-				lon: null
-			},
-			destination: {
-				lat: null,
-				lon: null
-			}
+			directions: null
 		};
-
-	}
-
-	public componentDidUpdate() {
-
-		const { origin, destination } = this.props;
 
 		const DirectionsService = new google.maps.DirectionsService();
 
-		if (origin && origin.lat && destination && destination.lat){
+		const { origin, destination } = this.props;
+
+		if (origin && destination){
 			DirectionsService.route({
 				origin: new google.maps.LatLng(origin.lat, origin.lon),
 				destination: new google.maps.LatLng(destination.lat, destination.lon),
 				travelMode: google.maps.TravelMode.DRIVING,
 			}, (result, status) => {
-				console.log(result);
 				if (status === google.maps.DirectionsStatus.OK) {
-				this.setState({
-					directions: result
-				});
+					this.setState({
+						directions: result
+					});
 				} else {
-				console.error(`error fetching directions ${result}`);
+					console.error(`error fetching directions ${result}`);
 				}
 			});
 		}
 	}
 
-	public render () {
-		const { center, directions } = this.state;
+	render () {
+		const { directions } = this.state;
+		const { origin } = this.props;
 
 		return (
-			<GoogleMap
-				defaultZoom={11}
-				defaultCenter={new google.maps.LatLng(center.lat, center.lan)}
-			>
-				{directions && <DirectionsRenderer directions={this.state.directions} />}
-			</GoogleMap>
+			<React.Fragment>
+				{origin && directions ? (
+					<GoogleMap
+						defaultZoom={11}
+						defaultCenter={new google.maps.LatLng(origin.lat, origin.lan)}
+					>
+						<DirectionsRenderer directions={directions} />
+					</GoogleMap>
+				) : null}
+			</React.Fragment>
 		)
 	}
 }

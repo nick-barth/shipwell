@@ -8,29 +8,17 @@ import './style.css';
 import AddressInput from '../addressInput';
 
 
-type IState = {
-	route?: object,
-}
+const Route = (props:any) => {
+	const { onValidate } = props;
 
-export default class Nav extends React.Component<{}, IState> {
-
-	constructor(props:any) {
-		super(props);
-
-		this.state = {
-			route: undefined
-		};
-	}
-
-	public render () {
-
-		return (
+	return (
 			<div className="routemapper">
 				from:
-				<AddressInput />
+				<AddressInput type={'origin'} onValidate={onValidate} />
 				to:
-				<AddressInput />
+				<AddressInput type={'destination'} onValidate={onValidate} />
 			</div>
 		);
-	}
 }
+
+export default Route;
